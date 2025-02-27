@@ -1,5 +1,6 @@
 package com.poll.PollApplication.services;
 
+import com.poll.PollApplication.model.OptionVote;
 import com.poll.PollApplication.model.Poll;
 import com.poll.PollApplication.repositories.PollRepository;
 import org.springframework.http.ResponseEntity;
@@ -29,5 +30,16 @@ public class PollService {
 
     public Optional<Poll> getPollById(Long id) {
         return pollRepository.findById(id);
+    }
+
+    public void vote(Long pollId, int optionindex) {
+        Poll poll = pollRepository.findById(pollId).orElseThrow();
+        List<OptionVote> Options = poll.getOptions();
+        if (optionindex<0 || optionindex>= Options.size()){
+            throw new RuntimeException();
+        }
+        OptionVote selectedOption = Options.get(optionindex);
+        selectedOption.setVotes(selectedOption.getVotes()+1);
+        pollRepository.save(poll);
     }
 }
