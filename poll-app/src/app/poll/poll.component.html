@@ -1,13 +1,64 @@
-<!-- src/app/poll/poll.component.html -->
-<h2>Available Polls</h2>
-<div *ngFor="let poll of polls" class="card mb-3">
-  <div class="card-body">
-    <h3>{{ poll.question }}</h3>
-    <div>
-      <div *ngFor="let option of poll.options; let i = index" class="mb-2">
-        <button class="btn btn-outline-primary w-100 text-start">
-          {{ option.optionText }} ({{ option.votes }} votes)
+<div class="container mt-5">
+  <!-- Create Poll Section -->
+  <div class="card shadow-lg mb-5 bg-gradient-light border-0">
+    <div class="card-header bg-primary text-white fw-bold py-3">
+      Create a New Poll
+    </div>
+    <div class="card-body p-4">
+      <div class="mb-3">
+        <input
+          [(ngModel)]="newPoll.question"
+          type="text"
+          class="form-control form-control-lg shadow-sm"
+          placeholder="Enter your poll question"
+          required>
+      </div>
+      <div *ngFor="let option of newPoll.options; let i = index; trackBy: trackByIndex" class="mb-3 d-flex align-items-center">
+        <input
+          [(ngModel)]="option.optionText"
+          type="text"
+          class="form-control shadow-sm me-2"
+          placeholder="Option {{i + 1}}"
+          required>
+        <button
+          *ngIf="newPoll.options.length > 2"
+          (click)="newPoll.options.splice(i,1)"
+          class="btn btn-outline-danger btn-sm"
+          title="Remove Option">
+          <i class="bi bi-trash"></i>
         </button>
+      </div>
+      <div class="d-flex justify-content-between">
+        <button
+          (click)="addOption()"
+          class="btn btn-outline-success shadow-sm fw-medium">
+          <i class="bi bi-plus-circle me-1"></i> Add Option
+        </button>
+        <button
+          (click)="createPoll()"
+          class="btn btn-primary shadow-sm fw-medium"
+          >
+          <i class="bi bi-check-circle me-1"></i> Create Poll
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Available Polls Section -->
+  <h2 class="mt-4 text-center fw-bold text-primary">Available Polls</h2>
+  <div *ngFor="let poll of polls" class="card mb-3 shadow-sm border-0 bg-light">
+    <div class="card-body p-4">
+      <h3 class="card-title text-dark fw-semibold">{{ poll.question }}</h3>
+      <div>
+        <div *ngFor="let option of poll.options; let i = index" class="mb-2">
+          <button
+            (click)="vote(poll.id, i)"
+            class="btn btn-outline-primary w-100 text-start py-2 fw-medium shadow-sm hover-shadow"
+            style="transition: all 0.3s ease;">
+            [{{ option.optionText }}]
+            <span class="badge bg-primary-subtle text-primary ms-2">{{ option.votes }} votes</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>

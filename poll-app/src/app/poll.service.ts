@@ -12,7 +12,7 @@ export class PollService {
   constructor(private http: HttpClient) { }
 
   createPoll(poll: Poll): Observable<Poll>{
-    return this.http.post<Poll>(this.baseUrl , poll);
+    return this.http.post<Poll>(this.baseUrl, poll);
   }
 
   getPolls(): Observable<Poll[]>{
