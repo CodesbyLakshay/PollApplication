@@ -15,7 +15,7 @@
       </div>
       <div *ngFor="let option of newPoll.options; let i = index; trackBy: trackByIndex" class="mb-3 d-flex align-items-center">
         <input
-          [(ngModel)]="option.optionText"
+          [(ngModel)]="option.voteOption"
           type="text"
           class="form-control shadow-sm me-2"
           placeholder="Option {{i + 1}}"
@@ -55,7 +55,7 @@
             (click)="vote(poll.id, i)"
             class="btn btn-outline-primary w-100 text-start py-2 fw-medium shadow-sm hover-shadow"
             style="transition: all 0.3s ease;">
-            [{{ option.optionText }}]
+            [{{ option.voteOption }}]
             <span class="badge bg-primary-subtle text-primary ms-2">{{ option.votes }} votes</span>
           </button>
         </div>

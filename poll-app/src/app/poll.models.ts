@@ -1,5 +1,5 @@
 export interface OptionVote {
-    optionText: string;
+    voteOption: string;
     votes: number;
 }
 
